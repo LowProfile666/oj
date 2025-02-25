@@ -1,10 +1,10 @@
 <template>
   <div id="baseLayout">
-    <a-layout style="height: 400px">
+    <a-layout style="min-height: 100vh">
       <a-layout-header>
         <NavbarMenu />
       </a-layout-header>
-      <a-layout-content>
+      <a-layout-content style="padding: 0 20px">
         <router-view />
       </a-layout-content>
       <a-layout-footer>

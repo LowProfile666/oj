@@ -8,7 +8,7 @@
 #footBar {
   background: #efefef;
   padding: 20px;
-  position: absolute;
+  position: sticky;
   bottom: 0;
   left: 0;
   right: 0;

@@ -1,6 +1,6 @@
 <template>
   <div id="navbarMenu">
-    <a-row class="grid-demo" style="margin-bottom: 16px" align="center">
+    <a-row class="grid-demo" align="center" :wrap="false">
       <a-col flex="auto">
         <a-menu mode="horizontal" :selected-keys="selectedKeys">
           <a-menu-item
@@ -16,16 +16,16 @@
             </div>
           </a-menu-item>
           <a-menu-item
-            v-for="route in routes"
-            :key="route.path"
-            @click="jump(route.name)"
+            v-for="item in menuItems"
+            :key="item.path"
+            @click="jump(item.name)"
           >
-            {{ route.meta.title }}
+            {{ item.meta?.title }}
           </a-menu-item>
         </a-menu>
       </a-col>
       <a-col flex="100px">
-        <div>{{ store.state.user.loginUser.username ?? "未登录" }}</div>
+        <div>{{ loginUser.userName ?? "未登录" }}</div>
       </a-col>
     </a-row>
   </div>
@@ -33,18 +33,35 @@
 
 <script lang="ts" setup>
 import routes from "@/router/routes";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { computed, onMounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
+import checkUserAccess from "@/access/check";
 
 const router = useRouter();
-const selectedKeys = ref(["/"]);
+const route = useRoute();
+const selectedKeys = ref(["/home"]);
 const store = useStore();
+const loginUser = ref(store.state.user.loginUser);
 
-// store.dispatch("user/login", {
-//   id: 1,
-//   username: "zsm",
-//   role: "admin",
+const baseRoutes = routes.filter((route) => route.name === "Base")[0];
+
+const menuItems = computed(() => {
+  return baseRoutes?.children?.filter((item) => {
+    if (item.meta?.hide === "true") return false;
+    if (!checkUserAccess(loginUser.value, item.meta?.access as string))
+      return false;
+    return true;
+  });
+});
+
+// const menuItems = computed(() => {
+//   return routes.filter((item) => {
+//     if (item.meta?.hide === "true") return false;
+//     if (!checkUserAccess(loginUser.value, item.meta?.access as string))
+//       return false;
+//     return true;
+//   });
 // });
 
 router.afterEach((to, from) => {
@@ -55,6 +72,10 @@ const jump = (name) => {
     name,
   });
 };
+
+onMounted(() => {
+  selectedKeys.value = [route.path];
+});
 </script>
 
 <style scoped>
