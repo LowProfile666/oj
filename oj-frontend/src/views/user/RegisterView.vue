@@ -25,8 +25,19 @@
             placeholder="请输入密码"
           />
         </a-form-item>
+        <a-form-item field="checkPassword" label="确认密码">
+          <a-input-password
+            v-model="form.checkPassword"
+            placeholder="请确认密码"
+          />
+        </a-form-item>
         <a-form-item>
-          <a-button type="primary" html-type="submit">登录</a-button>
+          <a-button type="primary" html-type="submit">注册</a-button>
+          <div style="text-align: right; width: 100%">
+            <router-link :to="{ name: 'Login' }"
+              >已有账号？立即登录
+            </router-link>
+          </div>
         </a-form-item>
       </a-form>
     </div>
@@ -35,23 +46,25 @@
 
 <script lang="ts" setup>
 import { reactive } from "vue";
-import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
+import { UserControllerService } from "../../../generated";
+import { Message } from "@arco-design/web-vue";
 
 const router = useRouter();
-const route = useRoute();
-const store = useStore();
 const form = reactive({
   userAccount: "",
   userPassword: "",
+  checkPassword: "",
 });
 const handleSubmit = async () => {
-  const res = await store.dispatch("user/login", form);
-  if (res) {
-    const redirect = route.query.redirectName ?? "Home";
+  const res = await UserControllerService.userRegisterUsingPost(form);
+  if (res.code === 0) {
+    Message.success("注册成功");
     await router.replace({
-      name: redirect as string,
+      name: "Login",
     });
+  } else {
+    Message.error("注册失败，" + res.message);
   }
 };
 </script>

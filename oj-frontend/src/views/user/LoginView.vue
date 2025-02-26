@@ -27,6 +27,11 @@
         </a-form-item>
         <a-form-item>
           <a-button type="primary" html-type="submit">登录</a-button>
+          <div style="text-align: right; width: 100%">
+            <router-link :to="{ name: 'Register' }"
+              >没有账号？立即注册
+            </router-link>
+          </div>
         </a-form-item>
       </a-form>
     </div>

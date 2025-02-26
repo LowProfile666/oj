@@ -17,13 +17,13 @@ router.beforeEach(async (to, from, next) => {
   // 页面需要登录，用户没有登录，跳转到登录页面
   if (
     pageAccess !== AccessEnum.NOT_LOGIN &&
-    loginUser.role === AccessEnum.NOT_LOGIN
+    loginUser.userRole === AccessEnum.NOT_LOGIN
   ) {
     next(`/user/login?redirectName=${to.name as string}`);
     return;
   }
   // 页面需要管理员权限，用户没有管理员权限，跳转到的无权限页面
-  if (checkUserAccess(loginUser, pageAccess)) {
+  if (!checkUserAccess(loginUser, pageAccess)) {
     next("/403");
     return;
   }

@@ -8,8 +8,8 @@ export default {
   state: {
     loginUser: {
       id: -1,
-      username: undefined,
-      role: undefined,
+      userName: undefined,
+      userRole: undefined,
     },
   },
   mutations: {

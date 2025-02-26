@@ -7,7 +7,7 @@ import ACCESSENUM from "@/access/AccessEnum";
  * @return Boolean 是否有权限
  */
 const checkUserAccess = (user: any, access = ACCESSENUM.NOT_LOGIN) => {
-  const userRole = user.role;
+  const userRole = user.userRole;
   if (access === ACCESSENUM.ADMIN && userRole !== ACCESSENUM.ADMIN) {
     return false;
   }
