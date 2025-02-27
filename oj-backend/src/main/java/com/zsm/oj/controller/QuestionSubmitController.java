@@ -1,11 +1,19 @@
 package com.zsm.oj.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zsm.oj.annotation.AuthCheck;
 import com.zsm.oj.common.BaseResponse;
 import com.zsm.oj.common.ErrorCode;
 import com.zsm.oj.common.ResultUtils;
+import com.zsm.oj.constant.UserConstant;
 import com.zsm.oj.exception.BusinessException;
+import com.zsm.oj.model.dto.question.QuestionQueryRequest;
 import com.zsm.oj.model.dto.questionsubmit.QuestionSubmitAddRequest;
+import com.zsm.oj.model.dto.questionsubmit.QuestionSubmitQueryRequest;
+import com.zsm.oj.model.entity.Question;
+import com.zsm.oj.model.entity.QuestionSubmit;
 import com.zsm.oj.model.entity.User;
+import com.zsm.oj.model.vo.QuestionSubmitVO;
 import com.zsm.oj.service.QuestionSubmitService;
 import com.zsm.oj.service.QuestionService;
 import com.zsm.oj.service.UserService;
@@ -34,7 +42,7 @@ public class QuestionSubmitController {
     private UserService userService;
 
     /**
-     * 提交 / 取消提交
+     * 提交
      *
      * @param questionSubmitAddRequest
      * @param request
@@ -50,5 +58,22 @@ public class QuestionSubmitController {
         final User loginUser = userService.getLoginUser(request);
         long result = questionSubmitService.doQuestionSubmit(questionSubmitAddRequest, loginUser);
         return ResultUtils.success(result);
+    }
+
+    /**
+     * 分页获取列表
+     *
+     * @param questionQueryRequest
+     * @return
+     */
+    @PostMapping("/list/page")
+    public BaseResponse<Page<QuestionSubmitVO>> listQuestionSubmitByPage(@RequestBody QuestionSubmitQueryRequest questionQueryRequest, HttpServletRequest request) {
+        long current = questionQueryRequest.getCurrent();
+        long size = questionQueryRequest.getPageSize();
+        User loginUser = userService.getLoginUser(request);
+        Page<QuestionSubmit> questionSubmitPage = questionSubmitService.page(new Page<>(current, size),
+                questionSubmitService.getQueryWrapper(questionQueryRequest));
+        Page<QuestionSubmitVO> questionSubmitVOPage = questionSubmitService.getQuestionSubmitVOPage(questionSubmitPage, loginUser);
+        return ResultUtils.success(questionSubmitVOPage);
     }
 }
