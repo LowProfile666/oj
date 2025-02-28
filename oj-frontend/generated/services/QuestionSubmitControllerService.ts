@@ -22,7 +22,7 @@ export class QuestionSubmitControllerService {
     ): CancelablePromise<BaseResponse_long_ | any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/question_submit/',
+            url: '/question_submit/',
             body: questionSubmitAddRequest,
             errors: {
                 401: `Unauthorized`,
@@ -43,7 +43,7 @@ export class QuestionSubmitControllerService {
     ): CancelablePromise<BaseResponse_Page_QuestionSubmitVO_ | any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/question_submit/list/page',
+            url: '/question_submit/list/page',
             body: questionQueryRequest,
             errors: {
                 401: `Unauthorized`,
