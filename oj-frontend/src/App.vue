@@ -21,4 +21,8 @@ onMounted(() => {
 .bytemd-toolbar-icon.bytemd-tippy.bytemd-tippy-right:last-child {
   display: none;
 }
+
+#questionAddView .arco-form-item-content-flex {
+  display: block !important;
+}
 </style>

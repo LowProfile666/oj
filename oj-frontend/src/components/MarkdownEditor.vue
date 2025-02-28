@@ -2,6 +2,7 @@
   <Editor
     :value="props.value"
     :plugins="plugins"
+    :mode="props.mode"
     @change="props.handleChange"
     placeholder="请输入内容"
   />
@@ -18,6 +19,10 @@ import "juejin-markdown-themes/dist/juejin.min.css";
 const props = defineProps({
   value: String,
   handleChange: Function,
+  mode: {
+    type: String,
+    default: "split",
+  },
 });
 
 const plugins = [gfm(), highlight()];

@@ -40,7 +40,7 @@ public class QuestionUpdateRequest implements Serializable {
     /**
      * 判题用例（json 数组）
      */
-    private JudgeCase judgeCase;
+    private JudgeCase[] judgeCase;
 
     /**
      * 判题配置（json 对象）

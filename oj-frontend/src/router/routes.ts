@@ -1,5 +1,4 @@
 import { RouteRecordRaw } from "vue-router";
-import HomeView from "@/views/HomeView.vue";
 import ACCESSENUM from "@/access/AccessEnum";
 
 const routes: Array<RouteRecordRaw> = [
@@ -35,6 +34,15 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
+        path: "/question/manage",
+        name: "QuestionManage",
+        component: () => import("../views/question/QuestionManageView.vue"),
+        meta: {
+          title: "题目管理",
+          access: ACCESSENUM.ADMIN,
+        },
+      },
+      {
         path: "/403",
         name: "403",
         component: () => import("../views/exception/403View.vue"),
@@ -65,6 +73,30 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../views/user/RegisterView.vue"),
         meta: {
           title: "用户注册",
+        },
+      },
+    ],
+  },
+  {
+    path: "/question",
+    name: "Question",
+    component: () => import("../layouts/BaseLayout.vue"),
+    children: [
+      {
+        path: "/question/add",
+        name: "QuestionAdd",
+        component: () => import("../views/question/QuestionAddView.vue"),
+        meta: {
+          title: "题目创建",
+          access: ACCESSENUM.ADMIN,
+        },
+      },
+      {
+        path: "update",
+        name: "QuestionUpdate",
+        component: () => import("../views/question/QuestionAddView.vue"),
+        meta: {
+          access: ACCESSENUM.ADMIN,
         },
       },
     ],

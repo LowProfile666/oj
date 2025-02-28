@@ -62,7 +62,7 @@ public class QuestionController {
         List<String> tags = questionAddRequest.getTags();
         if (tags != null) question.setTags(JSONUtil.toJsonStr(tags));
 
-        JudgeCase judgeCase = questionAddRequest.getJudgeCase();
+        JudgeCase[] judgeCase = questionAddRequest.getJudgeCase();
         if (judgeCase != null) question.setJudgeCase(JSONUtil.toJsonStr(judgeCase));
 
         JudgeConfig judgeConfig = questionAddRequest.getJudgeConfig();
@@ -142,9 +142,21 @@ public class QuestionController {
      * @param id
      * @return
      */
+    @GetMapping("/get")
+    public BaseResponse<Question> getQuestionById(Long id, HttpServletRequest request) {
+        if (id == null || id <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Question question = questionService.getById(id);
+        if (question == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        return ResultUtils.success(question);
+    }
+
     @GetMapping("/get/vo")
-    public BaseResponse<QuestionVO> getQuestionVOById(long id, HttpServletRequest request) {
-        if (id <= 0) {
+    public BaseResponse<QuestionVO> getQuestionVOById(Long id, HttpServletRequest request) {
+        if (id == null || id <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         Question question = questionService.getById(id);
