@@ -15,7 +15,6 @@ import CodeEditor from "@/components/CodeEditor.vue";
 
 const value = ref("");
 const handleChange = (e) => {
-  console.log(e);
   value.value = e;
 };
 </script>

@@ -44,7 +44,7 @@ spring:
       # 大小限制
       max-file-size: 10MB
   jackson:
-    date-format: yyyy-mm-dd HH:MM:ss
+    date-format: yyyy-MM-dd HH:mm:ss
 server:
   address: 0.0.0.0
   port: 8101
@@ -103,3 +103,7 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.zsm.oj.controller
+# 代码沙箱的配置
+judge:
+  codesandbox:
+    type: "example"

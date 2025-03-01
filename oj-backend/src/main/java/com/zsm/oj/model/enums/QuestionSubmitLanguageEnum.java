@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public enum QuestionSubmitLanguageEnum {
 
     JAVA("Java", "java"),
-    CPP("C++", "c++"),
+    CPP("C++", "cpp"),
     PHP("Php", "php"),
     JAVASCRIPT("JavaScript", "javascript");
 

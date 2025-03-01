@@ -11,26 +11,9 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/home",
         name: "Home",
-        component: () => import("../views/HomeView.vue"),
+        component: () => import("../views/question/QuestionListView.vue"),
         meta: {
           title: "主页",
-        },
-      },
-      {
-        path: "/about",
-        name: "About",
-        component: () => import("../views/AboutView.vue"),
-        meta: {
-          title: "关于",
-        },
-      },
-      {
-        path: "/admin",
-        name: "Admin",
-        component: () => import("../views/AdminView.vue"),
-        meta: {
-          title: "管理",
-          access: ACCESSENUM.ADMIN,
         },
       },
       {
@@ -40,15 +23,6 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: "题目管理",
           access: ACCESSENUM.ADMIN,
-        },
-      },
-      {
-        path: "/403",
-        name: "403",
-        component: () => import("../views/exception/403View.vue"),
-        meta: {
-          title: "403",
-          hide: "true",
         },
       },
     ],
@@ -83,12 +57,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../layouts/BaseLayout.vue"),
     children: [
       {
-        path: "/question/add",
+        path: "add",
         name: "QuestionAdd",
         component: () => import("../views/question/QuestionAddView.vue"),
         meta: {
           title: "题目创建",
-          access: ACCESSENUM.ADMIN,
+          access: ACCESSENUM.USER,
         },
       },
       {
@@ -97,6 +71,30 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../views/question/QuestionAddView.vue"),
         meta: {
           access: ACCESSENUM.ADMIN,
+        },
+      },
+      {
+        path: "do/:id",
+        name: "QuestionDo",
+        component: () => import("../views/question/QuestionView.vue"),
+        props: true,
+        meta: {
+          access: ACCESSENUM.USER,
+        },
+      },
+    ],
+  },
+  {
+    path: "/exception",
+    name: "Exception",
+    children: [
+      {
+        path: "403",
+        name: "403",
+        component: () => import("../views/exception/403View.vue"),
+        meta: {
+          title: "403",
+          hide: "true",
         },
       },
     ],

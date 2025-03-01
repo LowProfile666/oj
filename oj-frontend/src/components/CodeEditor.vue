@@ -1,10 +1,10 @@
 <template>
-  <div id="container" ref="editorContainerRef" style="height: 500px"></div>
+  <div id="container" ref="editorContainerRef" style="height: 100%"></div>
 </template>
 
 <script lang="ts" setup>
 import * as monaco from "monaco-editor";
-import { onMounted, ref, defineProps } from "vue";
+import { onMounted, ref, defineProps, watch } from "vue";
 
 const props = defineProps({
   value: String,
@@ -22,8 +22,16 @@ const props = defineProps({
 
 const editorContainerRef = ref();
 
+watch(
+  () => props.language,
+  () => {
+    monaco.editor.setModelLanguage(editor.getModel(), props.language);
+  }
+);
+
+let editor = {};
 onMounted(() => {
-  const editor = monaco.editor.create(editorContainerRef.value, {
+  editor = monaco.editor.create(editorContainerRef.value, {
     value: props.value,
     language: props.language,
     automaticLayout: true,

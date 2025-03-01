@@ -25,22 +25,29 @@
         <a-table-column title="点赞数" data-index="thumbNum"></a-table-column>
         <a-table-column title="标签" data-index="tags">
           <template #cell="{ record }">
-            <a-tag v-for="tag in JSON.parse(record.tags)" :key="tag"
-              >{{ tag }}
-            </a-tag>
+            <a-space wrap>
+              <a-tag
+                v-for="tag in JSON.parse(record.tags)"
+                :key="tag"
+                color="green"
+                >{{ tag }}
+              </a-tag>
+            </a-space>
           </template>
         </a-table-column>
         <a-table-column title="配置" data-index="judgeConfig">
           <template #cell="{ record }">
-            <a-tag
-              >时间：{{ JSON.parse(record.judgeConfig).timeLimit }}ms
-            </a-tag>
-            <a-tag
-              >内存：{{ JSON.parse(record.judgeConfig).memoryLimit }}kb
-            </a-tag>
-            <a-tag
-              >堆栈：{{ JSON.parse(record.judgeConfig).stackLimit }}kb
-            </a-tag>
+            <a-space wrap>
+              <a-tag color="blue"
+                >时间：{{ JSON.parse(record.judgeConfig).timeLimit }}ms
+              </a-tag>
+              <a-tag color="blue"
+                >内存：{{ JSON.parse(record.judgeConfig).memoryLimit }}kb
+              </a-tag>
+              <a-tag color="blue"
+                >堆栈：{{ JSON.parse(record.judgeConfig).stackLimit }}kb
+              </a-tag>
+            </a-space>
           </template>
         </a-table-column>
         <a-table-column title="创建用户" data-index="userId"></a-table-column>
@@ -60,7 +67,7 @@
               <a-button
                 type="primary"
                 status="danger"
-                @click="updateQuestion(record)"
+                @click="deleteQuestion(record)"
                 >删除
               </a-button>
             </a-space>
@@ -140,4 +147,9 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+#questionManageView {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+</style>

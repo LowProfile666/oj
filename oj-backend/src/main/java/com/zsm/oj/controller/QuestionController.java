@@ -18,6 +18,7 @@ import com.zsm.oj.model.dto.question.QuestionQueryRequest;
 import com.zsm.oj.model.dto.question.QuestionUpdateRequest;
 import com.zsm.oj.model.entity.Question;
 import com.zsm.oj.model.entity.User;
+import com.zsm.oj.model.enums.QuestionSubmitLanguageEnum;
 import com.zsm.oj.model.vo.QuestionVO;
 import com.zsm.oj.service.QuestionService;
 import com.zsm.oj.service.UserService;
@@ -125,6 +126,14 @@ public class QuestionController {
         List<String> tags = questionUpdateRequest.getTags();
         if (tags != null) {
             question.setTags(JSONUtil.toJsonStr(tags));
+        }
+        JudgeCase[] judgeCase = questionUpdateRequest.getJudgeCase();
+        if (judgeCase != null) {
+            question.setJudgeCase(JSONUtil.toJsonStr(judgeCase));
+        }
+        JudgeConfig judgeConfig = questionUpdateRequest.getJudgeConfig();
+        if (judgeConfig != null) {
+            question.setJudgeConfig(JSONUtil.toJsonStr(judgeConfig));
         }
         // 参数校验
         questionService.validQuestion(question, false);
@@ -269,5 +278,10 @@ public class QuestionController {
         boolean result = questionService.updateById(question);
 
         return ResultUtils.success(result);
+    }
+
+    @GetMapping("/languages")
+    public BaseResponse<List<String>> getLanguages() {
+        return ResultUtils.success(QuestionSubmitLanguageEnum.getValues());
     }
 }
