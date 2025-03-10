@@ -106,4 +106,4 @@ knife4j:
 # 代码沙箱的配置
 judge:
   codesandbox:
-    type: "example"
+    type: "remote"

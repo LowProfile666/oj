@@ -25,6 +25,15 @@ const routes: Array<RouteRecordRaw> = [
           access: ACCESSENUM.ADMIN,
         },
       },
+      {
+        path: "/question/submit",
+        name: "QuestionSubmit",
+        component: () => import("../views/question/QuestionSubmitListView.vue"),
+        meta: {
+          title: "提交记录",
+          access: ACCESSENUM.USER,
+        },
+      },
     ],
   },
   {

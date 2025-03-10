@@ -6,6 +6,17 @@
 //    }
 //}
 
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+        System.out.println("输出结果是：" + (a + b));
+    }
+}
+
 //import java.util.Scanner;
 //
 //public class Main {
@@ -52,16 +63,16 @@ import java.util.List;
 /**
  * 读取服务器文件（文件信息泄露）
  */
-public class Main {
-
-    public static void main(String[] args) throws InterruptedException, IOException {
-        String dir = System.getProperty("user.dir");
-        String path = dir + File.separator + "src/main/resources/application.yml";
-        List<String> strings = Files.readAllLines(Paths.get(path));
-        System.out.println(String.join("\n", strings));
-
-    }
-}
+//public class Main {
+//
+//    public static void main(String[] args) throws InterruptedException, IOException {
+//        String dir = System.getProperty("user.dir");
+//        String path = dir + File.separator + "src/main/resources/application.yml";
+//        List<String> strings = Files.readAllLines(Paths.get(path));
+//        System.out.println(String.join("\n", strings));
+//
+//    }
+//}
 
 
 //import java.io.File;

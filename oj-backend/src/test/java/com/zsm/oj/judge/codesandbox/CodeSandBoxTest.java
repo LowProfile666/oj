@@ -52,7 +52,9 @@ class CodeSandBoxTest {
         String code = """
                 public class Main {
                     public static void main(String[] args) {
-                        System.out.println("hello world");
+                        int a = Integer.parseInt(args[0]);
+                        int b = Integer.parseInt(args[1]);
+                        System.out.println(a + b);
                     }
                 }
                 """;

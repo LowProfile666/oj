@@ -111,6 +111,7 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         Integer status = questionSubmitQueryRequest.getStatus();
         Long questionId = questionSubmitQueryRequest.getQuestionId();
         Long userId = questionSubmitQueryRequest.getUserId();
+        String sortField = questionSubmitQueryRequest.getSortField();
 
         // 拼接查询条件
         queryWrapper.eq(ObjectUtils.isNotEmpty(language), "language", language);
@@ -118,6 +119,12 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         queryWrapper.eq(ObjectUtils.isNotEmpty(questionId), "questionId", questionId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
         queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
+        if (StringUtils.isNotBlank(sortField)) {
+            if ("desc".equals(questionSubmitQueryRequest.getSortOrder())) {
+                queryWrapper.orderByDesc(sortField);
+            } else
+                queryWrapper.orderByAsc(sortField);
+        }
 
         return queryWrapper;
     }

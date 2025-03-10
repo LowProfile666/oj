@@ -1,12 +1,16 @@
 package com.zsm.oj.judge.strategy.impl;
 
+import cn.hutool.json.JSONUtil;
 import com.zsm.oj.judge.strategy.JudgeStrategy;
 import com.zsm.oj.judge.strategy.JudgeStrategyContext;
 import com.zsm.oj.model.dto.judge.JudgeCase;
+import com.zsm.oj.model.dto.judge.JudgeConfig;
 import com.zsm.oj.model.dto.judge.JudgeInfo;
+import com.zsm.oj.model.entity.Question;
 import com.zsm.oj.model.enums.QuestionSubmitInfoEnum;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * author: ZSM
@@ -19,10 +23,16 @@ public class JavaJudgeStrategy implements JudgeStrategy {
         List<String> outputsContext = judgeStrategyContext.getOutputs();
         JudgeInfo judgeInfoContext = judgeStrategyContext.getJudgeInfo();
 
+        Question question = judgeStrategyContext.getQuestion();
+        JudgeConfig questionJudgeConfig = JSONUtil.toBean(question.getJudgeConfig(), JudgeConfig.class);
+        Long timeLimit = Optional.ofNullable(questionJudgeConfig.getTimeLimit()).orElse(0L);
+        Long memoryLimit = Optional.ofNullable(questionJudgeConfig.getMemoryLimit()).orElse(0L);
+        Long stackLimit = Optional.ofNullable(questionJudgeConfig.getStackLimit()).orElse(0L);
+
         List<JudgeCase> judgeCasesContext = judgeStrategyContext.getJudgeCases();
         List<String> outputs = judgeCasesContext.stream().map(JudgeCase::getOutput).toList();
-        Long memoryBySandBox = judgeInfoContext.getMemory();
-        Long timeBySandBox = judgeInfoContext.getTime();
+        Long memoryBySandBox = Optional.ofNullable(judgeInfoContext.getMemory()).orElse(0L);
+        Long timeBySandBox = Optional.ofNullable(judgeInfoContext.getTime()).orElse(0L);
 
         JudgeInfo judgeInfoToResponse = new JudgeInfo();
         judgeInfoToResponse.setMemory(memoryBySandBox);
@@ -33,9 +43,9 @@ public class JavaJudgeStrategy implements JudgeStrategy {
         QuestionSubmitInfoEnum questionSubmitInfoEnum = QuestionSubmitInfoEnum.ACCEPTED;
         if (outputsContext.size() != inputsContext.size()) {
             questionSubmitInfoEnum = QuestionSubmitInfoEnum.WRONG_ANSWER;
-        } else if ((timeBySandBox - JAVA_MORE_TIME) > judgeInfoContext.getTime()) {
+        } else if ((timeBySandBox - JAVA_MORE_TIME) > timeLimit) {
             questionSubmitInfoEnum = QuestionSubmitInfoEnum.TIME_LIMIT_EXCEEDED;
-        } else if (memoryBySandBox > judgeInfoContext.getMemory()) {
+        } else if (memoryBySandBox > memoryLimit) {
             questionSubmitInfoEnum = QuestionSubmitInfoEnum.MEMORY_LIMIT_EXCEEDED;
         } else for (int i = 0; i < outputsContext.size(); i++) {
             if (!outputsContext.get(i).equals(outputs.get(i))) {

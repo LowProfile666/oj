@@ -21,4 +21,8 @@ public class ProcessExecResult {
      * 程序执行时间
      */
     private Long time;
+    /**
+     * 程序执行内存
+     */
+    private Long memory;
 }

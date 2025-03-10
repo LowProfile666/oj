@@ -14,21 +14,21 @@ import java.util.List;
 @SpringBootTest
 class OjSandboxApplicationTests {
 
-    @Test
-    void testSecurity() throws IOException {
-        System.setSecurityManager(new DefaultSecurityManager());
-
-        String dir = System.getProperty("user.dir");
-        String path = dir + File.separator + "src/main/resources/muma.bat";
-        Files.write(Paths.get(path), "java --version".getBytes());
-    }
-
-    public static void main(String[] args) throws IOException {
-        System.setSecurityManager(new DefaultSecurityManager());
-
-        String dir = System.getProperty("user.dir");
-        String path = dir + File.separator + "src/main/resources/muma.bat";
-        Files.write(Paths.get(path), "java --version".getBytes());
-    }
+//    @Test
+//    void testSecurity() throws IOException {
+//        System.setSecurityManager(new DefaultSecurityManager());
+//
+//        String dir = System.getProperty("user.dir");
+//        String path = dir + File.separator + "src/main/resources/muma.bat";
+//        Files.write(Paths.get(path), "java --version".getBytes());
+//    }
+//
+//    public static void main(String[] args) throws IOException {
+//        System.setSecurityManager(new DefaultSecurityManager());
+//
+//        String dir = System.getProperty("user.dir");
+//        String path = dir + File.separator + "src/main/resources/muma.bat";
+//        Files.write(Paths.get(path), "java --version".getBytes());
+//    }
 
 }

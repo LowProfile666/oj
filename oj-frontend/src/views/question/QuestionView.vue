@@ -152,7 +152,7 @@ const form = ref({
 const languageOptions = ref([]);
 
 const submitQuestion = async () => {
-  const res = await QuestionSubmitControllerService.doQuestionSubmitUsingPost(
+  const res = await QuestionControllerService.doQuestionSubmitUsingPost(
     form.value
   );
   if (res.code === 0) {
@@ -171,7 +171,7 @@ const getData = async () => {
   } else {
     Message.error("获取题目失败，" + res.message);
   }
-  res = await QuestionControllerService.getLanguages();
+  res = await QuestionControllerService.getLanguagesUsingGet();
   if (res.code === 0) {
     languageOptions.value = res.data;
   } else {

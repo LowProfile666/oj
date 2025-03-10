@@ -16,11 +16,16 @@ import com.zsm.oj.model.dto.question.QuestionAddRequest;
 import com.zsm.oj.model.dto.question.QuestionEditRequest;
 import com.zsm.oj.model.dto.question.QuestionQueryRequest;
 import com.zsm.oj.model.dto.question.QuestionUpdateRequest;
+import com.zsm.oj.model.dto.questionsubmit.QuestionSubmitAddRequest;
+import com.zsm.oj.model.dto.questionsubmit.QuestionSubmitQueryRequest;
 import com.zsm.oj.model.entity.Question;
+import com.zsm.oj.model.entity.QuestionSubmit;
 import com.zsm.oj.model.entity.User;
 import com.zsm.oj.model.enums.QuestionSubmitLanguageEnum;
+import com.zsm.oj.model.vo.QuestionSubmitVO;
 import com.zsm.oj.model.vo.QuestionVO;
 import com.zsm.oj.service.QuestionService;
+import com.zsm.oj.service.QuestionSubmitService;
 import com.zsm.oj.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -40,7 +45,8 @@ public class QuestionController {
 
     @Resource
     private QuestionService questionService;
-
+    @Resource
+    private QuestionSubmitService questionSubmitService;
     @Resource
     private UserService userService;
 
@@ -283,5 +289,43 @@ public class QuestionController {
     @GetMapping("/languages")
     public BaseResponse<List<String>> getLanguages() {
         return ResultUtils.success(QuestionSubmitLanguageEnum.getValues());
+    }
+
+
+
+    /**
+     * 提交
+     *
+     * @param questionSubmitAddRequest
+     * @param request
+     * @return resultNum 提交变化数
+     */
+    @PostMapping("submit")
+    public BaseResponse<Long> doQuestionSubmit(@RequestBody QuestionSubmitAddRequest questionSubmitAddRequest,
+                                               HttpServletRequest request) {
+        if (questionSubmitAddRequest == null || questionSubmitAddRequest.getQuestionId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 登录才能操作
+        final User loginUser = userService.getLoginUser(request);
+        long result = questionSubmitService.doQuestionSubmit(questionSubmitAddRequest, loginUser);
+        return ResultUtils.success(result);
+    }
+
+    /**
+     * 分页获取列表
+     *
+     * @param questionQueryRequest
+     * @return
+     */
+    @PostMapping("submit/list/page")
+    public BaseResponse<Page<QuestionSubmitVO>> listQuestionSubmitByPage(@RequestBody QuestionSubmitQueryRequest questionQueryRequest, HttpServletRequest request) {
+        long current = questionQueryRequest.getCurrent();
+        long size = questionQueryRequest.getPageSize();
+        User loginUser = userService.getLoginUser(request);
+        Page<QuestionSubmit> questionSubmitPage = questionSubmitService.page(new Page<>(current, size),
+                questionSubmitService.getQueryWrapper(questionQueryRequest));
+        Page<QuestionSubmitVO> questionSubmitVOPage = questionSubmitService.getQuestionSubmitVOPage(questionSubmitPage, loginUser);
+        return ResultUtils.success(questionSubmitVOPage);
     }
 }

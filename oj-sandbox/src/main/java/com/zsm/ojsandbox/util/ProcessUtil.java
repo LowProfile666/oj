@@ -26,7 +26,7 @@ public class ProcessUtil {
                 // 获取编译进程的错误输入流
                 String t = null;
                 while ((t = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(t).append("\n");
+                    stringBuilder.append(t);
                 }
                 log.error("{}失败", opName);
                 log.error("失败信息：{}", stringBuilder);
@@ -35,7 +35,7 @@ public class ProcessUtil {
                 bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 String t = null;
                 while ((t = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(t).append("\n");
+                    stringBuilder.append(t);
                 }
                 log.info("{}成功", opName);
             }

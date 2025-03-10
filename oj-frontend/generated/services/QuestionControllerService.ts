@@ -3,8 +3,10 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { BaseResponse_boolean_ } from "../models/BaseResponse_boolean_";
+import type { BaseResponse_List_string_ } from "../models/BaseResponse_List_string_";
 import type { BaseResponse_long_ } from "../models/BaseResponse_long_";
 import type { BaseResponse_Page_Question_ } from "../models/BaseResponse_Page_Question_";
+import type { BaseResponse_Page_QuestionSubmitVO_ } from "../models/BaseResponse_Page_QuestionSubmitVO_";
 import type { BaseResponse_Page_QuestionVO_ } from "../models/BaseResponse_Page_QuestionVO_";
 import type { BaseResponse_Question_ } from "../models/BaseResponse_Question_";
 import type { BaseResponse_QuestionVO_ } from "../models/BaseResponse_QuestionVO_";
@@ -12,6 +14,8 @@ import type { DeleteRequest } from "../models/DeleteRequest";
 import type { QuestionAddRequest } from "../models/QuestionAddRequest";
 import type { QuestionEditRequest } from "../models/QuestionEditRequest";
 import type { QuestionQueryRequest } from "../models/QuestionQueryRequest";
+import type { QuestionSubmitAddRequest } from "../models/QuestionSubmitAddRequest";
+import type { QuestionSubmitQueryRequest } from "../models/QuestionSubmitQueryRequest";
 import type { QuestionUpdateRequest } from "../models/QuestionUpdateRequest";
 import type { CancelablePromise } from "../core/CancelablePromise";
 import { OpenAPI } from "../core/OpenAPI";
@@ -131,6 +135,23 @@ export class QuestionControllerService {
   }
 
   /**
+   * getLanguages
+   * @returns BaseResponse_List_string_ OK
+   * @throws ApiError
+   */
+  public static getLanguagesUsingGet(): CancelablePromise<BaseResponse_List_string_> {
+    return __request(OpenAPI, {
+      method: "GET",
+      url: "/question/languages",
+      errors: {
+        401: `Unauthorized`,
+        403: `Forbidden`,
+        404: `Not Found`,
+      },
+    });
+  }
+
+  /**
    * listQuestionByPage
    * @param questionQueryRequest questionQueryRequest
    * @returns BaseResponse_Page_Question_ OK
@@ -197,6 +218,50 @@ export class QuestionControllerService {
   }
 
   /**
+   * doQuestionSubmit
+   * @param questionSubmitAddRequest questionSubmitAddRequest
+   * @returns BaseResponse_long_ OK
+   * @returns any Created
+   * @throws ApiError
+   */
+  public static doQuestionSubmitUsingPost(
+    questionSubmitAddRequest: QuestionSubmitAddRequest
+  ): CancelablePromise<BaseResponse_long_ | any> {
+    return __request(OpenAPI, {
+      method: "POST",
+      url: "/question/submit",
+      body: questionSubmitAddRequest,
+      errors: {
+        401: `Unauthorized`,
+        403: `Forbidden`,
+        404: `Not Found`,
+      },
+    });
+  }
+
+  /**
+   * listQuestionSubmitByPage
+   * @param questionQueryRequest questionQueryRequest
+   * @returns BaseResponse_Page_QuestionSubmitVO_ OK
+   * @returns any Created
+   * @throws ApiError
+   */
+  public static listQuestionSubmitByPageUsingPost(
+    questionQueryRequest: QuestionSubmitQueryRequest
+  ): CancelablePromise<BaseResponse_Page_QuestionSubmitVO_ | any> {
+    return __request(OpenAPI, {
+      method: "POST",
+      url: "/question/submit/list/page",
+      body: questionQueryRequest,
+      errors: {
+        401: `Unauthorized`,
+        403: `Forbidden`,
+        404: `Not Found`,
+      },
+    });
+  }
+
+  /**
    * updateQuestion
    * @param questionUpdateRequest questionUpdateRequest
    * @returns BaseResponse_boolean_ OK
@@ -210,21 +275,6 @@ export class QuestionControllerService {
       method: "POST",
       url: "/question/update",
       body: questionUpdateRequest,
-      errors: {
-        401: `Unauthorized`,
-        403: `Forbidden`,
-        404: `Not Found`,
-      },
-    });
-  }
-
-  /**
-   * getLanguages
-   */
-  public static getLanguages(): CancelablePromise<BaseResponse_QuestionVO_> {
-    return __request(OpenAPI, {
-      method: "GET",
-      url: "/question/languages",
       errors: {
         401: `Unauthorized`,
         403: `Forbidden`,
