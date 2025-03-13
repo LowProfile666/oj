@@ -1,6 +1,6 @@
 package com.zsm.ojbackendmodel.codesandbox;
 
-import com.zsm.oj.model.dto.judge.JudgeInfo;
+import com.zsm.ojbackendmodel.dto.judge.JudgeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

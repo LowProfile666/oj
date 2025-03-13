@@ -10,8 +10,8 @@ spring:
       matching-strategy: ant_path_matcher
   # session 配置
   session:
-     store-type: redis
-     timeout: 2592000
+    store-type: redis
+    timeout: 2592000
   # 数据库配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -34,6 +34,11 @@ server:
     session:
       cookie:
         max-age: 2592000
+        path: /api
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
@@ -47,3 +52,5 @@ mybatis-plus:
 judge:
   codesandbox:
     type: "remote"
+knife4j:
+  enable: true

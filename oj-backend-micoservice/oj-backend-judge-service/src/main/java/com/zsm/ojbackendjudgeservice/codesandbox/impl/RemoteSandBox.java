@@ -13,7 +13,7 @@ import com.zsm.ojbackendjudgeservice.codesandbox.model.CodeSandBoxResponse;
  * time: 2025-03-01 16:34
  */
 public class RemoteSandBox implements CodeSandBox {
-    private final String REMOTE_URL = "http://localhost:8102/execute";
+    private final String REMOTE_URL = "http://localhost:8105/execute";
 
     @Override
     public CodeSandBoxResponse execute(CodeSandBoxRequest codeSandBoxRequest) {

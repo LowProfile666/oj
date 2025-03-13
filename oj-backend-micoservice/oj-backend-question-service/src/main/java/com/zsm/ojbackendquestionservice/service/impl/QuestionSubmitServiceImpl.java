@@ -15,6 +15,7 @@ import com.zsm.ojbackendmodel.enums.QuestionSubmitLanguageEnum;
 import com.zsm.ojbackendmodel.enums.QuestionSubmitStatusEnum;
 import com.zsm.ojbackendmodel.vo.QuestionSubmitVO;
 import com.zsm.ojbackendquestionservice.mapper.QuestionSubmitMapper;
+import com.zsm.ojbackendquestionservice.rabbitmq.MyMessageProducer;
 import com.zsm.ojbackendquestionservice.service.QuestionService;
 import com.zsm.ojbackendquestionservice.service.QuestionSubmitService;
 import com.zsm.ojbackendserviceclient.JudgeFeignClient;
@@ -45,6 +46,8 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
     @Resource
     @Lazy
     private JudgeFeignClient judgeFeignClient;
+    @Resource
+    private MyMessageProducer myMessageProducer;
 
     /**
      * 提交
@@ -79,9 +82,12 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         }
 
         Long questionSubmitId = questionSubmit.getId();
-        CompletableFuture.runAsync(() -> {
-            judgeFeignClient.doJudge(questionSubmitId);
-        });
+        // 向消息队列发送消息
+        myMessageProducer.sendMessage("code_exchange", "my_routingKey", String.valueOf(questionSubmitId));
+
+//        CompletableFuture.runAsync(() -> {
+//            judgeFeignClient.doJudge(questionSubmitId);
+//        });
 
         return questionSubmitId;
     }

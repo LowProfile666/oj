@@ -24,7 +24,7 @@ export class WxMpControllerService {
   ): CancelablePromise<string> {
     return __request(OpenAPI, {
       method: "GET",
-      url: "//",
+      url: "/",
       query: {
         echostr: echostr,
         nonce: nonce,
@@ -47,7 +47,7 @@ export class WxMpControllerService {
   public static receiveMessageUsingPost(): CancelablePromise<any> {
     return __request(OpenAPI, {
       method: "POST",
-      url: "//",
+      url: "/",
       errors: {
         401: `Unauthorized`,
         403: `Forbidden`,
@@ -64,7 +64,7 @@ export class WxMpControllerService {
   public static setMenuUsingGet(): CancelablePromise<string> {
     return __request(OpenAPI, {
       method: "GET",
-      url: "//setMenu",
+      url: "/setMenu",
       errors: {
         401: `Unauthorized`,
         403: `Forbidden`,

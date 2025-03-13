@@ -1,8 +1,9 @@
 package com.zsm.ojbackendcommon.exception;
 
-import com.zsm.oj.common.BaseResponse;
-import com.zsm.oj.common.ErrorCode;
-import com.zsm.oj.common.ResultUtils;
+
+import com.zsm.ojbackendcommon.common.BaseResponse;
+import com.zsm.ojbackendcommon.common.ErrorCode;
+import com.zsm.ojbackendcommon.common.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

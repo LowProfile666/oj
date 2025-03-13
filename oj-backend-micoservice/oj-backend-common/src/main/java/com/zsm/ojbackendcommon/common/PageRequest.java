@@ -1,6 +1,6 @@
 package com.zsm.ojbackendcommon.common;
 
-import com.zsm.oj.constant.CommonConstant;
+import com.zsm.ojbackendcommon.constant.CommonConstant;
 import lombok.Data;
 
 /**

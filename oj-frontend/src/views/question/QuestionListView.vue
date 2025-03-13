@@ -139,7 +139,7 @@ onMounted(() => {
 
 <style scoped>
 #questionListView {
-  width: 1280px;
+  width: 90%;
   margin: 0 auto;
 }
 </style>
